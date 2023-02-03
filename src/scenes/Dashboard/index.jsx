@@ -12,15 +12,25 @@ import PieChart from "../../components/PieChart";
 import BarChart from "../../components/BarChart";
 import StatBox from "../../components/StatBox";
 import ProgressCircle from "../../components/ProgressCircle";
+import useMediaQuery from "@mui/material/useMediaQuery";
+
+import {StatBoxData} from '../../constants/constants.js'
 
 const Dashboard = () => {
+  const isDesktop = useMediaQuery((theme) => theme.breakpoints.up("sm"));
   const theme = useTheme();
   const colors = tokens(theme.palette.mode);
 
   return (
-    <Box m="20px">
+    <Box sx={{ margin: "20px", height: "full", maxHeight: "100vh" }}>
       {/* HEADER */}
-      <Box display="flex" justifyContent="space-between" alignItems="center">
+      <Box
+        display="flex"
+        flexDirection={`${isDesktop ? "row" : "column"}`}
+        justifyContent="space-between"
+        alignItems="center"
+        gap={2}
+      >
         <Header title="DASHBOARD" subtitle="Welcome to your dashboard" />
 
         <Box>
@@ -43,90 +53,53 @@ const Dashboard = () => {
       <Box
         display="grid"
         gridTemplateColumns="repeat(12, 1fr)"
-        gridAutoRows="140px"
+        gridAutoRows={`${isDesktop ? "140px" : "100px"}`}
         gap="20px"
+        mt="20px"
       >
         {/* ROW 1 */}
-        <Box
-          gridColumn="span 3"
-          backgroundColor={colors.primary[400]}
-          display="flex"
-          alignItems="center"
-          justifyContent="center"
-        >
-          <StatBox
-            title="12,361"
-            subtitle="Emails Sent"
-            progress="0.75"
-            increase="+14%"
-            icon={
-              <EmailIcon
-                sx={{ color: colors.greenAccent[600], fontSize: "26px" }}
-              />
-            }
-          />
-        </Box>
-        <Box
-          gridColumn="span 3"
-          backgroundColor={colors.primary[400]}
-          display="flex"
-          alignItems="center"
-          justifyContent="center"
-        >
-          <StatBox
-            title="431,225"
-            subtitle="Sales Obtained"
-            progress="0.50"
-            increase="+21%"
-            icon={
-              <PointOfSaleIcon
-                sx={{ color: colors.greenAccent[600], fontSize: "26px" }}
-              />
-            }
-          />
-        </Box>
-        <Box
-          gridColumn="span 3"
-          backgroundColor={colors.primary[400]}
-          display="flex"
-          alignItems="center"
-          justifyContent="center"
-        >
-          <StatBox
-            title="32,441"
-            subtitle="New Clients"
-            progress="0.30"
-            increase="+5%"
-            icon={
-              <PersonAddIcon
-                sx={{ color: colors.greenAccent[600], fontSize: "26px" }}
-              />
-            }
-          />
-        </Box>
-        <Box
-          gridColumn="span 3"
-          backgroundColor={colors.primary[400]}
-          display="flex"
-          alignItems="center"
-          justifyContent="center"
-        >
-          <StatBox
-            title="1,325,134"
-            subtitle="Traffic Received"
-            progress="0.80"
-            increase="+43%"
-            icon={
-              <TrafficIcon
-                sx={{ color: colors.greenAccent[600], fontSize: "26px" }}
-              />
-            }
-          />
-        </Box>
+        {StatBoxData.map((item, index) => {
+          let Icon;
+          if (item.icon === "email") {
+            Icon = EmailIcon;
+          }
+          if (item.icon === "sales") {
+            Icon = PointOfSaleIcon;
+          }
+          if (item.icon === "client") {
+            Icon = PersonAddIcon;
+          }
+          if (item.icon === "traffic") {
+            Icon = TrafficIcon;
+          }
+
+          return  (
+            <Box
+            key={index}
+            gridColumn={`${isDesktop ? "span 3" : "span 12"}`}
+            backgroundColor={colors.primary[400]}
+            display="flex"
+            alignItems="center"
+            justifyContent="center"
+          >
+            <StatBox
+              title={item.title}
+              subtitle={item.subtitle}
+              progress={item.progress}
+              increase={item.increase}
+              icon={
+                <Icon
+                  sx={{ color: colors.greenAccent[600], fontSize: "26px" }}
+                />
+              }
+            />
+          </Box>
+          )
+        })}
 
         {/* ROW 2 */}
         <Box
-          gridColumn="span 8"
+          gridColumn={`${isDesktop ? "span 8" : "span 12"}`}
           gridRow="span 2"
           backgroundColor={colors.primary[400]}
         >
@@ -161,12 +134,12 @@ const Dashboard = () => {
               </IconButton>
             </Box>
           </Box>
-          <Box height="250px" m="-20px 0 0 0">
+          <Box height={`${isDesktop ? "250px" : "200px"}`} m="-40px 0 0 0">
             <LineChart isDashboard={true} />
           </Box>
         </Box>
         <Box
-          gridColumn="span 4"
+          gridColumn={`${isDesktop ? "span 4" : "span 12"}`}
           gridRow="span 2"
           backgroundColor={colors.primary[400]}
           overflow="auto"
@@ -218,7 +191,7 @@ const Dashboard = () => {
 
         {/* ROW 3 */}
         <Box
-          gridColumn="span 4"
+          gridColumn={`${isDesktop ? "span 4" : "span 12"}`}
           gridRow="span 2"
           backgroundColor={colors.primary[400]}
           p="30px"
@@ -232,7 +205,7 @@ const Dashboard = () => {
             alignItems="center"
             mt="25px"
           >
-            <ProgressCircle size="125" />
+            <ProgressCircle size={`${isDesktop ? "125" : "60"}`} />
             <Typography
               variant="h5"
               color={colors.greenAccent[500]}
@@ -244,7 +217,7 @@ const Dashboard = () => {
           </Box>
         </Box>
         <Box
-          gridColumn="span 4"
+          gridColumn={`${isDesktop ? "span 4" : "span 12"}`}
           gridRow="span 2"
           backgroundColor={colors.primary[400]}
         >
@@ -255,12 +228,12 @@ const Dashboard = () => {
           >
             Sales Quantity
           </Typography>
-          <Box height="250px" mt="-20px">
+          <Box height={`${isDesktop ? "250px" : "200px"}`} mt="-20px">
             <BarChart isDashboard={true} />
           </Box>
         </Box>
         <Box
-          gridColumn="span 4"
+          gridColumn={`${isDesktop ? "span 4" : "span 12"}`}
           gridRow="span 2"
           backgroundColor={colors.primary[400]}
           padding="30px"
@@ -272,7 +245,7 @@ const Dashboard = () => {
           >
             Technology usage based on projects
           </Typography>
-          <Box height="200px">
+          <Box height={`${isDesktop ? "200px" : "160px"}`}>
             <PieChart isDashboard={true} />
           </Box>
         </Box>

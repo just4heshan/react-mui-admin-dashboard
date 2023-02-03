@@ -1,12 +1,11 @@
 import { useState } from "react";
-import { ProSidebarProvider, Menu, MenuItem, SubMenu } from "react-pro-sidebar";
+import { ProSidebarProvider, Menu, MenuItem } from "react-pro-sidebar";
 import { Box, IconButton, Typography, useTheme } from "@mui/material";
 import { Link } from "react-router-dom";
 import { tokens } from "../../theme";
 import HomeOutlinedIcon from "@mui/icons-material/HomeOutlined";
 import PeopleOutlinedIcon from "@mui/icons-material/PeopleOutlined";
 import ContactsOutlinedIcon from "@mui/icons-material/ContactsOutlined";
-import ReceiptOutlinedIcon from "@mui/icons-material/ReceiptOutlined";
 import PersonOutlinedIcon from "@mui/icons-material/PersonOutlined";
 import CalendarTodayOutlinedIcon from "@mui/icons-material/CalendarTodayOutlined";
 import HelpOutlineOutlinedIcon from "@mui/icons-material/HelpOutlineOutlined";
@@ -14,7 +13,6 @@ import BarChartOutlinedIcon from "@mui/icons-material/BarChartOutlined";
 import PieChartOutlineOutlinedIcon from "@mui/icons-material/PieChartOutlineOutlined";
 import TimelineOutlinedIcon from "@mui/icons-material/TimelineOutlined";
 import MenuOutlinedIcon from "@mui/icons-material/MenuOutlined";
-import MapOutlinedIcon from "@mui/icons-material/MapOutlined";
 import { makeStyles } from "@mui/styles";
 import useMediaQuery from "@mui/material/useMediaQuery";
 
@@ -23,14 +21,14 @@ const useStyle = makeStyles({
     display: "flex",
     height: "100%",
     position: "fixed",
-    top:0,
-    left:0,
+    top: 0,
+    left: 0,
     zIndex: 100,
-  }
-})
+  },
+});
 
 const LeftBar = () => {
-  const isNonMobile = useMediaQuery((theme) => theme.breakpoints.up('sm'));;
+  const isDesktop = useMediaQuery((theme) => theme.breakpoints.up("sm"));
   const theme = useTheme();
   const colors = tokens(theme.palette.mode);
   const [isCollapsed, setIsCollapsed] = useState(false);
@@ -44,19 +42,20 @@ const LeftBar = () => {
         active={selected === title}
         onClick={() => {
           setSelected(title);
-          // setIsCollapsed(prev => (!prev));
         }}
         icon={icon}
         component={<Link to={to} />}
       >
-        {!isCollapsed ? (<Typography>{title}</Typography>) : ("")}
+        {!isCollapsed ? <Typography>{title}</Typography> : ""}
       </MenuItem>
     );
   };
 
   return (
-    <div className={classes.container}>
-      <ProSidebarProvider style={{ width:`${!isCollapsed ? "250px" : "50px"}`}}>
+    <Box sx={{  }}>
+      <ProSidebarProvider
+        style={{ width: `${!isCollapsed ? "250px" : "50px"}` }}
+      >
         <Menu
           menuItemStyles={{
             button: ({ level, active, disabled }) => {
@@ -73,12 +72,12 @@ const LeftBar = () => {
                   color: active ? "#f2f0f0" : undefined,
                   "&:hover": {
                     backgroundColor: colors.primary[600],
-                    color: "#f2f0f0"
+                    color: "#f2f0f0",
                   },
                 };
             },
           }}
-          collapsed= {isCollapsed}
+          collapsed={isCollapsed}
           defaultCollapsed
           iconShape="square"
           style={{
@@ -86,8 +85,6 @@ const LeftBar = () => {
             height: "100%",
             width: !isCollapsed ? "250px" : "50px",
             display: "flex",
-            overflowX: "hidden",
-            // overflowY: "scroll",
           }}
         >
           {/* // Menu Icon and App Name */}
@@ -99,7 +96,7 @@ const LeftBar = () => {
               color: colors.grey[100],
             }}
           >
-            {!isCollapsed && (
+            {!isCollapsed ? (
               <Box
                 display="flex"
                 justifyContent="space-between"
@@ -113,11 +110,21 @@ const LeftBar = () => {
                   <MenuOutlinedIcon />
                 </IconButton>
               </Box>
+            ) : (
+              <IconButton onClick={() => setIsCollapsed(!isCollapsed)}>
+                <MenuOutlinedIcon />
+              </IconButton>
             )}
           </MenuItem>
           {/* // User Info Section Image - Name - Position */}
           {!isCollapsed && (
-            <Box mb="15px" display="flex" justifyContent="center" alignContent="center" gap={2} >
+            <Box
+              mb="15px"
+              display="flex"
+              justifyContent="center"
+              alignContent="center"
+              gap={2}
+            >
               <Box display="flex" justifyContent="center" alignItems="center">
                 <img
                   alt="profile-user"
@@ -142,8 +149,8 @@ const LeftBar = () => {
               </Box>
             </Box>
           )}
-          {/* // MenuItems Dashboard - Manage TEam - Contacts -Invoices...  */}
-          <Box display="flex" flexDirection="column" >
+          {/* // MenuItems Dashboard - Manage Team - Contacts -Invoices...  */}
+          <Box display="flex" flexDirection="column">
             <Item
               title="Dashboard"
               to="/"
@@ -154,7 +161,10 @@ const LeftBar = () => {
             <Typography
               variant="h6"
               color={colors.greenAccent[500]}
-              sx={{textAlign: `${isCollapsed ? "center" : "start"}`, padding: `20px 0 0 ${isCollapsed ? "0" : "20px"}` }}
+              sx={{
+                textAlign: `${isCollapsed ? "center" : "start"}`,
+                padding: `20px 0 0 ${isCollapsed ? "0" : "20px"}`,
+              }}
             >
               Data
             </Typography>
@@ -182,7 +192,10 @@ const LeftBar = () => {
             <Typography
               variant="h6"
               color={colors.greenAccent[500]}
-              sx={{textAlign: `${isCollapsed ? "center" : "start"}`, padding: `20px 0 0 ${isCollapsed ? "0" : "20px"}`}}
+              sx={{
+                textAlign: `${isCollapsed ? "center" : "start"}`,
+                padding: `20px 0 0 ${isCollapsed ? "0" : "20px"}`,
+              }}
             >
               Pages
             </Typography>
@@ -210,7 +223,10 @@ const LeftBar = () => {
             <Typography
               variant="h6"
               color={colors.greenAccent[500]}
-              sx={{ textAlign: `${isCollapsed ? "center" : "start"}`, padding: `20px 0 0 ${isCollapsed ? "0" : "20px"}`}}
+              sx={{
+                textAlign: `${isCollapsed ? "center" : "start"}`,
+                padding: `20px 0 0 ${isCollapsed ? "0" : "20px"}`,
+              }}
             >
               Charts
             </Typography>
@@ -244,7 +260,7 @@ const LeftBar = () => {
           )} */}
         </Menu>
       </ProSidebarProvider>
-    </div>
+    </Box>
   );
 };
 
