@@ -1,0 +1,13 @@
+{
+  "files": {
+    "main.css": "/react-mui-admin-dashboard/static/css/main.da19f1e7.css",
+    "main.js": "/react-mui-admin-dashboard/static/js/main.39120847.js",
+    "index.html": "/react-mui-admin-dashboard/index.html",
+    "main.da19f1e7.css.map": "/react-mui-admin-dashboard/static/css/main.da19f1e7.css.map",
+    "main.39120847.js.map": "/react-mui-admin-dashboard/static/js/main.39120847.js.map"
+  },
+  "entrypoints": [
+    "static/css/main.da19f1e7.css",
+    "static/js/main.39120847.js"
+  ]
+}
